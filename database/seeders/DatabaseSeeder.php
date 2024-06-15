@@ -17,24 +17,24 @@ final class DatabaseSeeder extends Seeder
         /** @var Tenant $tenant */
         $tenant = Tenant::query()->create(
             attributes: [
-                'id' => 'treblle',
+                'id' => 'mesoft',
             ],
         );
 
         $tenant->domains()->create(
             attributes: [
-                'domain' => 'treblle.eng.test',
+                'domain' => 'mesoft.localhost',
             ],
         );
 
         Tenant::all()->runForEach(function (Tenant $tenant) {
             $user = User::factory()->create([
-                'name' => 'Steve McDougall',
-                'email' => 'juststevemcd@gmail.com',
+                'name' => 'Me Soft',
+                'email' => 'me@soft.com',
             ]);
 
             Team::factory()->for($user)->create([
-                'name' => 'Developer Relations',
+                'name' => 'Me Soft Co',
                 'logo' => null,
                 'description' => 'The DevRel Team is awesome'
             ]);

@@ -6,7 +6,6 @@
             <img class="w-auto h-10 mx-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&amp;shade=500" alt="Your Company">
             <h2 class="mt-10 text-2xl font-bold leading-9 tracking-tight text-center text-primary">{{ $title }}</h2>
         </div>
-
         {{ $slot }}
     </div>
 </x-layouts.page>

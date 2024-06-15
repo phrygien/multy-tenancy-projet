@@ -7,12 +7,15 @@ namespace App\Livewire\Tenant\Settings;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
+use Mary\Traits\Toast;
 
 final class ProfileForm extends Component
 {
     public string $name = '';
 
     public string $email = '';
+
+    use Toast;
 
     public function mount(): void
     {
@@ -28,7 +31,7 @@ final class ProfileForm extends Component
             'name' => $this->name,
             'email' => $this->email,
         ]);
-
+        $this->success('Profil updated successfuly');
         $this->dispatch('user-updated');
     }
 

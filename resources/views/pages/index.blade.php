@@ -1,3 +1,3 @@
 <x-layouts.page title="Home Page">
-    Test
+    Test Admin Page
 </x-layouts.page>
