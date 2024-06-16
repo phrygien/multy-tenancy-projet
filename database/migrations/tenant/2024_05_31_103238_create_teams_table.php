@@ -10,14 +10,14 @@ return new class () extends Migration {
     public function up(): void
     {
         Schema::create('teams', static function (Blueprint $table): void {
-            $table->ulid('id')->primary();
+            $table->id();
 
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('logo')->nullable();
 
             $table
-                ->foreignUlid('user_id')
+                ->foreignId('user_id')
                 ->index()
                 ->constrained('users')
                 ->cascadeOnDelete();

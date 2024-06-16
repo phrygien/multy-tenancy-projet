@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="acid">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
@@ -43,7 +43,7 @@
 
                 @if(Auth::user()->is_admin == 1)
                 <x-menu-item title="Dashboard" icon="o-sparkles" link="/" />
-                <x-menu-item title="Users" icon="o-user-group" link="{{ route('pages:tenants:settings:profile') }}" />
+                <x-menu-item title="Users" icon="o-user-group" link="{{ route('pages:users') }}" />
                 @endif
                 <x-menu-item title="Tenants" icon="o-circle-stack" link="####" />
                 {{-- <x-menu-sub title="Tenants" icon="o-cog-6-tooth">
