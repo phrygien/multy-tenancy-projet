@@ -11,7 +11,9 @@ return new class () extends Migration {
     {
         Schema::create('tenants', static function (Blueprint $table): void {
             $table->string('id')->primary();
-
+            $table->string('name')->unique();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->boolean('is_published')->default(0);
             // your custom columns may go here
             $table->json('data')->nullable();
 
