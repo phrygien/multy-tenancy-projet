@@ -14,13 +14,13 @@ class TenantCreate extends Component
 
     public $id;
 
-    #[Validate(['required', 'max:150'])]
+    #[Validate(['required', 'max:150', 'unique:tenants,name'])]
     public $domain_name;
 
-    #[Validate(['required', 'max:150'])]
+    #[Validate(['required', 'max:150', 'unique:tenants,name'])]
     public $name;
 
-    #[Validate(['required', 'max:150'])]
+    #[Validate(['required', 'max:150', 'unique:tenants,email'])]
     public $email;
 
     public function mount(): void

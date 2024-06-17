@@ -28,7 +28,7 @@
         </div>
 
         <x-slot:actions>
-            <x-button label="Cancel" />
+            <x-button label="Cancel" link="{{ route('pages:tenants')}}" />
             <x-button label="Valider" class="btn-primary" type="submit" spinner="save" />
         </x-slot:actions>
     </x-form>

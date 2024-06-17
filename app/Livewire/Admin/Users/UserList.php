@@ -4,9 +4,11 @@ namespace App\Livewire\Admin\Users;
 
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class UserList extends Component
 {
+    use WithPagination;
     public function render()
     {
         $headers = [
@@ -15,7 +17,7 @@ class UserList extends Component
             ['key' => 'email', 'label' => 'Email'] # <---- nested attributes
         ];
 
-        $users = User::all();
+        $users = User::paginate(24);
         return view('livewire.admin.users.user-list', [
             'headers' => $headers,
             'users' => $users

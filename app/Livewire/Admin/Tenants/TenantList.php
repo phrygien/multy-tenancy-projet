@@ -6,9 +6,17 @@ use App\Models\Tenant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithPagination;
+use Mary\Traits\Toast;
 
 class TenantList extends Component
 {
+    use WithPagination;
+    use Toast;
+
+    public array $selected = [];
+    public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
+
     public function placeholder()
     {
         return <<<'HTML'
@@ -27,23 +35,30 @@ class TenantList extends Component
 
         $tenantsQuery = DB::table('tenants')
                 ->join('users', 'users.id', '=', 'tenants.user_id')
-                ->join('domains', 'tenant_id', '=', 'tenants.id')
-                ->select('tenants.*', 'users.name', 'domains.domain');
+                ->leftJoin('domains', 'tenant_id', '=', 'tenants.id')
+                ->select('tenants.*', 'users.name as user_name', 'domains.domain')
+                ->orderBy(...array_values($this->sortBy));
 
         if (Auth::user()->is_admin != 1) {
             $tenantsQuery->where('tenants.user_id', Auth::user()->id);
         }
 
-        $tenants = $tenantsQuery->get();
+        $tenants = $tenantsQuery->paginate(30);
 
         $headers = [
             ['key' => 'id', 'label' => '#'],
-            ['key' => 'name', 'label' => 'Tenant Name'],
-            ['key' => 'email', 'label' => 'Email'],
-            ['key' => 'domain', 'label' => 'Domain Name'],
-            ['key' => 'data', 'label' => 'Details'],
+            ['key' => 'name', 'label' => 'Tenant Name', 'sortable'],
+            ['key' => 'email', 'label' => 'Email', 'sortable'],
+            ['key' => 'domain', 'label' => 'Domain Name', 'sortable'],
+            ['key' => 'user_name', 'label' => 'Admin Domain', 'class' => 'bg-red-500/20'],
+            ['key' => 'data', 'label' => 'Data']
         ];
 
         return view('livewire.admin.tenants.tenant-list', ['headers' => $headers, 'tenants' => $tenants ]);
+    }
+
+    public function delete($id): void
+    {
+        dd($id);
     }
 }
