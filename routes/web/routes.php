@@ -28,5 +28,16 @@ foreach (config('tenancy.central_domains') as $domain) {
             Route::view('users/create', 'pages.admin.users.create')->name('users.create');
         });
 
+        /** end route for users */
+
+        /** routes for manage tenant */
+        Route::middleware(['auth'])->group(static function (): void {
+            Route::view('tenants', 'pages.admin.tenants.index')->name('tenants');
+        });
+
+        Route::middleware(['auth'])->group(static function (): void {
+            Route::view('tenants/create', 'pages.admin.tenants.create')->name('tenants.create');
+        });
+
     });
 }

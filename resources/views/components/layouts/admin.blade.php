@@ -45,7 +45,7 @@
                 <x-menu-item title="Dashboard" icon="o-sparkles" link="/" />
                 <x-menu-item title="Users" icon="o-user-group" link="{{ route('pages:users') }}" />
                 @endif
-                <x-menu-item title="Tenants" icon="o-circle-stack" link="####" />
+                <x-menu-item title="Tenants" icon="o-circle-stack" link="{{ route('pages:tenants')}}" />
                 {{-- <x-menu-sub title="Tenants" icon="o-cog-6-tooth">
                     <x-menu-item title="List" icon="o-wifi" link="{{ route('pages:tenants:settings:profile') }}" />
                     <x-menu-item title="Add Tenant" icon="o-archive-box" link="####" />
