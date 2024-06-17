@@ -44,6 +44,7 @@ class TenantCreate extends Component
         $this->validate();
 
         $tenant = Tenant::create([
+            'id' => $this->name,
             'name' => $this->name,
             'email' => $this->email,
             'user_id' => Auth::user()->id

@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Tenants;
 
 use App\Models\Tenant;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class TenantList extends Component
@@ -23,14 +24,20 @@ class TenantList extends Component
 
     public function render()
     {
+
+        $tenants = DB::table('tenants')
+                    ->join('users', 'users.id', '=', 'tenants.user_id')
+                    ->join('domains', 'tenant_id', '=', 'tenants.id')
+                    ->select('tenants.*', 'users.name', 'domains.domain')
+                    ->get();
         $headers = [
             ['key' => 'id', 'label' => '#'],
             ['key' => 'name', 'label' => 'Tenant Name'],
             ['key' => 'email', 'label' => 'Email'],
-            ['key' => 'domain.domain', 'label' => 'Domain Name']
+            ['key' => 'domain', 'label' => 'Domain Name'],
+            ['key' => 'data', 'label' => 'Details'],
         ];
 
-        $tenants = Tenant::with('domains')->where('user_id', Auth::user()->id)->get();
         return view('livewire.admin.tenants.tenant-list', ['headers' => $headers, 'tenants' => $tenants ]);
     }
 }
