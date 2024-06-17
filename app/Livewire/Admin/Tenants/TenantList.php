@@ -25,11 +25,17 @@ class TenantList extends Component
     public function render()
     {
 
-        $tenants = DB::table('tenants')
-                    ->join('users', 'users.id', '=', 'tenants.user_id')
-                    ->join('domains', 'tenant_id', '=', 'tenants.id')
-                    ->select('tenants.*', 'users.name', 'domains.domain')
-                    ->get();
+        $tenantsQuery = DB::table('tenants')
+                ->join('users', 'users.id', '=', 'tenants.user_id')
+                ->join('domains', 'tenant_id', '=', 'tenants.id')
+                ->select('tenants.*', 'users.name', 'domains.domain');
+
+        if (Auth::user()->is_admin != 1) {
+            $tenantsQuery->where('tenants.user_id', Auth::user()->id);
+        }
+
+        $tenants = $tenantsQuery->get();
+
         $headers = [
             ['key' => 'id', 'label' => '#'],
             ['key' => 'name', 'label' => 'Tenant Name'],
