@@ -7,7 +7,7 @@
             @if(Auth::user()->is_admin == 1)
             <x-button icon="o-trash" class="btn-error" label="Désactiver" />
             @endif
-            <x-button icon="o-currency-euro" class="btn-primary" label="Souscrire" wire:click='souscrire()' />
+            <x-button icon="o-currency-euro" class="btn-primary" label="Souscrire" wire:click="$toggle('showDrawer2')" />
         </x-slot:actions>
     </x-header>
 
@@ -65,4 +65,47 @@
     <x-card class="mt-4" title="App Modules" subtitle="Module concernant l'aplication" separator progress-indicator="save2">
         <x-table :headers="$headers_module" :rows="$modules" striped @row-click="alert($event.detail.module_name)" />
     </x-card>
+
+    <x-drawer  title="Souscription dans {{ $app->name }}" separator wire:model="showDrawer2" class="w-11/12 lg:w-1/3" right>
+        <div>
+            <x-form wire:submit="subscribe">
+                {{--  Basic section  --}}
+                <div class="grid-cols-5 lg:grid">
+                    <div class="col-span-2">
+                        <x-header title="Basic" subtitle="Duré de l'abonnement" size="text-2xl" />
+                    </div>
+                    <div class="grid col-span-3 gap-3">
+                        <x-datetime  label="Debut" inline wire:model='subscribe_start' />
+                        <x-datetime  label="Fin" inline inline wire:model='subscribe_end' />
+                    </div>
+                </div>
+
+                {{--  Details section --}}
+                <hr class="my-5" />
+
+                <div class="grid-cols-5 lg:grid">
+                    <div class="col-span-2">
+                        <x-header title="Pack" subtitle="Pack pour la souscription" size="text-2xl" />
+                    </div>
+                    <div class="grid col-span-3 gap-3">
+                        <select class="w-full select select-primary" wire:model.live='pack_id'>
+                            <option value="">Quelle pack vous souhetez souscrire?</option>
+                            @foreach ($packs as $pack )
+                                <option value="{{ $pack->id }}">{{ $pack->pack_name }}</option>
+                            @endforeach
+                          </select>
+
+                          <x-input label="Montant à payer après" inline type="number" wire:model='price' disabled/>
+                    </div>
+                </div>
+
+
+                <x-slot:actions>
+                    <x-button label="Cancel" @click="$wire.showDrawer2 = false" />
+                    <x-button label="Valider" class="btn-primary" type="submit" spinner="subscribe" />
+                </x-slot:actions>
+            </x-form>
+        </div>
+    </x-drawer>
+
 </div>
