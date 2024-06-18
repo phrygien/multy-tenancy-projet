@@ -1,18 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Admin\Tenants;
 
-use App\Models\Tenant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Mary\Traits\Toast;
 
-class TenantList extends Component
+final class TenantList extends Component
 {
-    use WithPagination;
     use Toast;
+    use WithPagination;
 
     public array $selected = [];
     public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
@@ -34,12 +35,12 @@ class TenantList extends Component
     {
 
         $tenantsQuery = DB::table('tenants')
-                ->join('users', 'users.id', '=', 'tenants.user_id')
-                ->leftJoin('domains', 'tenant_id', '=', 'tenants.id')
-                ->select('tenants.*', 'users.name as user_name', 'domains.domain')
-                ->orderBy(...array_values($this->sortBy));
+            ->join('users', 'users.id', '=', 'tenants.user_id')
+            ->leftJoin('domains', 'tenant_id', '=', 'tenants.id')
+            ->select('tenants.*', 'users.name as user_name', 'domains.domain')
+            ->orderBy(...array_values($this->sortBy));
 
-        if (Auth::user()->is_admin != 1) {
+        if (1 !== Auth::user()->is_admin) {
             $tenantsQuery->where('tenants.user_id', Auth::user()->id);
         }
 
@@ -51,10 +52,10 @@ class TenantList extends Component
             ['key' => 'email', 'label' => 'Email', 'sortable'],
             ['key' => 'domain', 'label' => 'Domain Name', 'sortable'],
             ['key' => 'user_name', 'label' => 'Admin Domain', 'class' => 'bg-red-500/20'],
-            ['key' => 'data', 'label' => 'Data']
+            //['key' => 'data', 'label' => 'Data']
         ];
 
-        return view('livewire.admin.tenants.tenant-list', ['headers' => $headers, 'tenants' => $tenants ]);
+        return view('livewire.admin.tenants.tenant-list', ['headers' => $headers, 'tenants' => $tenants]);
     }
 
     public function delete($id): void

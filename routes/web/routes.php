@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Apps;
 use Illuminate\Support\Facades\Route;
 
 foreach (config('tenancy.central_domains') as $domain) {
@@ -37,6 +38,25 @@ foreach (config('tenancy.central_domains') as $domain) {
 
         Route::middleware(['auth'])->group(static function (): void {
             Route::view('tenants/create', 'pages.admin.tenants.create')->name('tenants.create');
+        });
+
+        /** pour gerer les application */
+        Route::middleware(['auth'])->group(static function (): void {
+            Route::view('apps', 'pages.admin.apps.index')->name('apps');
+        });
+
+        Route::get('apps/{id}/details', function (Apps $app, $id) {
+
+            $app = Apps::find($id);
+            return view('pages.admin.apps.details', compact('app'));
+        })->name('apps.edit');
+
+        Route::middleware(['auth'])->group(static function (): void {
+            Route::view('modules', 'pages.admin.modules.index')->name('modules');
+        });
+
+        Route::middleware(['auth'])->group(static function (): void {
+            Route::view('abonnements', 'pages.admin.abonnements.index')->name('abonnements');
         });
 
     });

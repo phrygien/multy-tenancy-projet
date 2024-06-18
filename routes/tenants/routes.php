@@ -18,4 +18,14 @@ Route::middleware(['web',InitializeTenancyByDomain::class,PreventAccessFromCentr
             path: 'routes/tenants/settings.php',
         ));
     });
+
+    /** pour le plateforme school */
+    Route::middleware(['auth'])->group(static function ():  void {
+        Route::prefix('schools')->as('schools:')->group(base_path(
+            path: 'routes/tenants/school.php',
+        ));
+    });
+    /**
+     * fin plateforme school
+     */
 });

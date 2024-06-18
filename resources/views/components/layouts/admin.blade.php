@@ -46,9 +46,13 @@
                 <x-menu-item title="Users" icon="o-user-group" link="{{ route('pages:users') }}" />
                 @endif
                 <x-menu-item title="Tenants" icon="o-circle-stack" link="{{ route('pages:tenants')}}" />
-                {{-- <x-menu-sub title="Tenants" icon="o-cog-6-tooth">
-                    <x-menu-item title="List" icon="o-wifi" link="{{ route('pages:tenants:settings:profile') }}" />
-                    <x-menu-item title="Add Tenant" icon="o-archive-box" link="####" />
+                <x-menu-item title="Applications" icon="o-cube" link="{{ route('pages:apps') }}" />
+                <x-menu-item title="Customers" icon="o-users" link="####" />
+                <x-menu-item title="Renouvellement abonnements" icon="o-currency-euro" link="{{ route('pages:abonnements') }}" />
+                {{-- <x-menu-sub title="Applications" icon="o-cpu-chip">
+                    <x-menu-item title="Applications" icon="o-cube" link="{{ route('pages:apps') }}" />
+                    <x-menu-item title="Modules application" icon="o-archive-box" link="{{ route('pages:modules') }}" />
+                    <x-menu-item title="Packs application" icon="o-archive-box" link="####" />
                 </x-menu-sub> --}}
             </x-menu>
         </x-slot:sidebar>
@@ -60,6 +64,6 @@
     </x-main>
 
     {{--  TOAST area --}}
-    <x-toast />
+    <x-toast position="toast-top toast-center" />
 </body>
 </html>
