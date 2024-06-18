@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Mary\Traits\Toast;
+use Illuminate\Support\Facades\DB;
 
 class AppDetails extends Component
 {
@@ -87,18 +88,43 @@ class AppDetails extends Component
     {
         $this->validate();
 
-        Subscribe::create([
-            'user_id' => $this->user_id,
-            'apps_id' => $this->app_id,
-            'pack_id' => $this->pack_id,
-            'subscribe_start' => $this->subscribe_start,
-            'subscribe_end' => $this->subscribe_end
-        ]);
+        if($this->subscribe_start < $this->subscribe_end){
+            // Vérifiez si un abonnement existe déjà entre les dates données
+            $subscribe_start = $this->subscribe_start;
+            $subscribe_end = $this->subscribe_end;
+            $existingSubscription = DB::table('subscribes')
+            ->where('user_id', $this->user_id)
+            ->where('apps_id', $this->app_id)
+            ->where(function ($query) use ($subscribe_start, $subscribe_end) {
+                $query->whereBetween('subscribe_start', [$subscribe_start, $subscribe_end])
+                    ->orWhereBetween('subscribe_end', [$subscribe_start, $subscribe_end])
+                    ->orWhere(function ($query) use ($subscribe_start, $subscribe_end) {
+                        $query->where('subscribe_start', '<', $subscribe_start)
+                                ->where('subscribe_end', '>', $subscribe_end);
+                    });
+            })
+            ->exists();
+            if ( !$existingSubscription) {
 
-        $this->success('Souscription avec succèes ! ');
+                Subscribe::create([
+                    'user_id' => $this->user_id,
+                    'apps_id' => $this->app_id,
+                    'pack_id' => $this->pack_id,
+                    'subscribe_start' => $this->subscribe_start,
+                    'subscribe_end' => $this->subscribe_end
+                ]);
 
-        //$this->reset();
-        $this->showDrawer2 = false;
+                $this->success('Souscription avec succèes ! ');
+
+                //$this->reset();
+                $this->showDrawer2 = false;
+
+            }else{
+                $this->warning('Un abonnement existe déjà pour cette période ! ');
+            }
+        }else{
+            $this->error('Souscription échoué, periode invalide ! ');
+        }
 
     }
 }

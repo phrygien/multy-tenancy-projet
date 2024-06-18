@@ -72,7 +72,7 @@
                 {{--  Basic section  --}}
                 <div class="grid-cols-5 lg:grid">
                     <div class="col-span-2">
-                        <x-header title="Basic" subtitle="Duré de l'abonnement" size="text-2xl" />
+                        <x-header title="Periode" subtitle="Duré de l'abonnement" size="text-2xl" />
                     </div>
                     <div class="grid col-span-3 gap-3">
                         <x-datetime  label="Debut" inline wire:model='subscribe_start' />
