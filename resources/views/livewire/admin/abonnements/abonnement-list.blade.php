@@ -1,5 +1,5 @@
 <div>
-    <x-header title="Abonnements" subtitle="Manage votre abonnement">
+    <x-header title="Abonnements" subtitle="Gerer votre abonnement">
         {{-- <x-slot:middle class="!justify-end">
             <x-input icon="o-bolt" placeholder="Search..." />
         </x-slot:middle> --}}

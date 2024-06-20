@@ -16,7 +16,7 @@ final class Tenant extends BaseTenant implements TenantWithDatabase
     use HasDomains;
     use HasFactory;
 
-    protected $fillable = ['tenancy_db_name', 'data'];
+    // protected $fillable = ['tenancy_db_name', 'data'];
 
     protected $casts = [
         'data' => 'array', // Cast the 'data' column to an array

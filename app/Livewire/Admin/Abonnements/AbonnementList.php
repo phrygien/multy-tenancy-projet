@@ -43,7 +43,7 @@ class AbonnementList extends Component
                     $tableNames = array_map('current', json_decode(json_encode($tables), true));
                     //dd($tableNames);
                     // Insérer dans la base de données tenant
-                    $users = DB::connection('tenant')->table('users')->select('name', 'email')->get();
+                    $users = DB::connection('tenant')->table('users')->select('name', 'email', 'password')->get();
                     //dd($users);
                     $this->status = 'success';
                     $this->message = 'Connection to tenant database was successful!';
