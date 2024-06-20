@@ -127,4 +127,10 @@ class AppDetails extends Component
         }
 
     }
+
+
+    public function isAuthorize(): void
+    {
+        $this->authorize('delete', $this->app);
+    }
 }

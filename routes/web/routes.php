@@ -55,7 +55,7 @@ foreach (config('tenancy.central_domains') as $domain) {
             Route::view('modules', 'pages.admin.modules.index')->name('modules');
         });
 
-        Route::middleware(['auth'])->group(static function (): void {
+        Route::middleware(['auth', 'permission:role-list|role-create|role-edit|role-delete'])->group(static function (): void {
             Route::view('abonnements', 'pages.admin.abonnements.index')->name('abonnements');
         });
 

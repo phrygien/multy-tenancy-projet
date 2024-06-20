@@ -4,6 +4,7 @@
             <x-input icon="o-bolt" placeholder="Search..." />
         </x-slot:middle> --}}
     </x-header>
+
     <x-card separator progress-indicator>
         <x-table :headers="$headers" :rows="$abonnements" link="/docs/installation/?from={username}" >
             @scope('cell_state', $abonnement)

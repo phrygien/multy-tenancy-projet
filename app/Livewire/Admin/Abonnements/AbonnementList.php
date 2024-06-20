@@ -89,4 +89,5 @@ class AbonnementList extends Component
             'tables' => $this->tables,
         ]);
     }
+
 }

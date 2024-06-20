@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @property string $id
@@ -32,6 +33,7 @@ final class User extends Authenticatable
     //use HasUlids;
     use Notifiable;
     use SoftDeletes;
+    use HasRoles;
 
     /** @var array<int,string> */
     protected $fillable = [

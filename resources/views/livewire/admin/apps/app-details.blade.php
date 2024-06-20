@@ -10,7 +10,7 @@
             <x-button icon="o-currency-euro" class="btn-primary" label="Souscrire" wire:click="$toggle('showDrawer2')" />
         </x-slot:actions>
     </x-header>
-
+    <x-mary-button label="Authorize" wire:click="isAuthorize()" class="btn-primary"/>
 <div class="p-5 rounded-lg shadow-sm card bg-base-100" wire:key="maryfe2c4520cee98a7fa7867a379ba3b286">
         <div class="pb-5">
             <div class="flex items-center justify-between">
