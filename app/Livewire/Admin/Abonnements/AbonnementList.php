@@ -3,11 +3,64 @@
 namespace App\Livewire\Admin\Abonnements;
 
 use App\Models\Subscribe;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
 class AbonnementList extends Component
 {
+    public $tenantDatabaseName;
+
+    public $status;
+    public $message;
+    public $tables;
+    public $tenantDbName;
+
+    public function mount()
+    {
+        $this->testConnection();
+    }
+
+    public function testConnection()
+    {
+        $user = Auth::user();
+
+        if ($user && $user->tenant) {
+            $tenant = $user->tenant;
+            $db = 'tenant_'.$tenant->id;//$tenant->id;
+
+            if ($db) {
+                try {
+                    // Définir dynamiquement la base de données tenant
+                    config(['database.connections.tenant.database' => $db]);
+                    DB::purge('tenant');
+                    DB::reconnect('tenant');
+
+                    // Essayer de se connecter et d'exécuter une simple requête
+                    DB::connection('tenant')->getPdo();
+                    $this->tables = DB::connection('tenant')->select('SHOW TABLES');
+                    $tables = DB::connection('tenant')->select('SHOW TABLES');
+                    $tableNames = array_map('current', json_decode(json_encode($tables), true));
+                    //dd($tableNames);
+                    // Insérer dans la base de données tenant
+                    $users = DB::connection('tenant')->table('users')->select('name', 'email')->get();
+                    //dd($users);
+                    $this->status = 'success';
+                    $this->message = 'Connection to tenant database was successful!';
+                } catch (\Exception $e) {
+                    $this->status = 'error';
+                    $this->message = $e->getMessage();
+                }
+            } else {
+                $this->status = 'error';
+                $this->message = 'Tenancy DB name not found.';
+            }
+        } else {
+            $this->status = 'error';
+            $this->message = 'User is not associated with a tenant';
+        }
+    }
+
     public function render()
     {
         $abonnements = DB::table('subscribes')
@@ -24,12 +77,16 @@ class AbonnementList extends Component
             ['key' => 'user_name', 'label' => 'Customer'],
             ['key' => 'subscribe_start', 'label' => 'Debut abonnement'],
             ['key' => 'subscribe_end', 'label' => 'Fin abonnement'],
-            ['key' => 'price_pack', 'label' => 'Montant']
+            ['key' => 'price_pack', 'label' => 'Montant'],
+            ['key' => 'state', 'label' => 'Statut']
         ];
 
         return view('livewire.admin.abonnements.abonnement-list', [
             'headers' => $headers,
-            'abonnements' => $abonnements
+            'abonnements' => $abonnements,
+            'status' => $this->status,
+            'message' => $this->message,
+            'tables' => $this->tables,
         ]);
     }
 }

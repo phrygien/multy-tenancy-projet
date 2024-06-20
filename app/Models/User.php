@@ -83,4 +83,9 @@ final class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function tenant()
+    {
+        return $this->hasOne(Tenant::class); // Assurez-vous que c'est `hasOne` si un utilisateur a un seul locataire
+    }
 }

@@ -32,6 +32,20 @@ return [
     */
 
     'connections' => [
+        'tenant' => [
+            'driver' => 'mysql',
+            'host' => env('DB_TENANT_HOST', '127.0.0.1'),
+            'port' => env('DB_TENANT_PORT', '3306'),
+            'database' => '',  // Ce sera défini dynamiquement
+            'username' => env('DB_TENANT_USERNAME', 'tenant'),
+            'password' => env('DB_TENANT_PASSWORD', ''),
+            'unix_socket' => env('DB_TENANT_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
 
         'sqlite' => [
             'driver' => 'sqlite',

@@ -48,7 +48,7 @@
                 <x-menu-item title="Tenants" icon="o-circle-stack" link="{{ route('pages:tenants')}}" />
                 <x-menu-item title="Applications" icon="o-cube" link="{{ route('pages:apps') }}" />
                 <x-menu-item title="Customers" icon="o-users" link="####" />
-                <x-menu-item title="Renouvellement abonnements" icon="o-currency-euro" link="{{ route('pages:abonnements') }}" />
+                <x-menu-item title="Abonnements" icon="o-currency-euro" link="{{ route('pages:abonnements') }}" />
                 {{-- <x-menu-sub title="Applications" icon="o-cpu-chip">
                     <x-menu-item title="Applications" icon="o-cube" link="{{ route('pages:apps') }}" />
                     <x-menu-item title="Modules application" icon="o-archive-box" link="{{ route('pages:modules') }}" />

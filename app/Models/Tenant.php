@@ -16,6 +16,19 @@ final class Tenant extends BaseTenant implements TenantWithDatabase
     use HasDomains;
     use HasFactory;
 
+    protected $fillable = ['tenancy_db_name', 'data'];
+
+    protected $casts = [
+        'data' => 'array', // Cast the 'data' column to an array
+    ];
+
+    // Accessor for 'tenancy_db_name'
+    public function getTenancyDbNameAttribute()
+    {
+        return $this->data['tenancy_db_name'] ?? null;
+    }
+
+    // Define custom columns
     public static function getCustomColumns(): array
     {
         return [
@@ -24,6 +37,7 @@ final class Tenant extends BaseTenant implements TenantWithDatabase
             'email',
             'user_id',
             'is_published',
+            'data', // Make sure 'data' column is included
         ];
     }
 }

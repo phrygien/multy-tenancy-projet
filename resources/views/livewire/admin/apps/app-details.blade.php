@@ -66,7 +66,7 @@
         <x-table :headers="$headers_module" :rows="$modules" striped @row-click="alert($event.detail.module_name)" />
     </x-card>
 
-    <x-drawer  title="Souscription dans {{ $app->name }}" separator wire:model="showDrawer2" class="w-11/12 lg:w-1/3" right>
+    <x-drawer  title="Souscription à {{ $app->name }}" separator wire:model="showDrawer2" class="w-11/12 lg:w-1/3" right>
         <div>
             <x-form wire:submit="subscribe">
                 {{--  Basic section  --}}
