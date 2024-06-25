@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Apps;
+use App\Models\Pack;
 use Illuminate\Support\Facades\Route;
 
 foreach (config('tenancy.central_domains') as $domain) {
@@ -55,9 +56,23 @@ foreach (config('tenancy.central_domains') as $domain) {
             Route::view('modules', 'pages.admin.modules.index')->name('modules');
         });
 
-        Route::middleware(['auth', 'permission:role-list|role-create|role-edit|role-delete'])->group(static function (): void {
+        Route::middleware(['auth'])->group(static function (): void {
             Route::view('abonnements', 'pages.admin.abonnements.index')->name('abonnements');
         });
+
+        Route::middleware(['auth'])->group(static function (): void {
+            Route::view('packs', 'pages.admin.packs.index')->name('packs');
+        });
+
+        Route::middleware(['auth'])->group(static function (): void {
+            Route::view('packs/create', 'pages.admin.packs.create')->name('packs.create');
+        });
+
+        Route::get('packs/{id}/edit', function (Pack $pack, $id) {
+
+            $pack = Pack::find($id);
+            return view('pages.admin.packs.edit', compact('pack'));
+        })->name('packs.edit');
 
     });
 }

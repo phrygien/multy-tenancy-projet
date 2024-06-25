@@ -41,19 +41,18 @@
                     <x-menu-separator />
                 @endif
 
-                @if(Auth::user()->is_admin == 1)
                 <x-menu-item title="Dashboard" icon="o-sparkles" link="/" />
+                @if(Auth::user()->is_admin == 1)
                 <x-menu-item title="Users" icon="o-user-group" link="{{ route('pages:users') }}" />
+                <x-menu-sub title="Packs & Modules" icon="o-cpu-chip">
+                    <x-menu-item title="Packs application" icon="o-archive-box" link="{{ route('pages:packs')}}" />
+                    <x-menu-item title="Modules application" icon="o-archive-box" link="{{ route('pages:modules') }}" />
+                </x-menu-sub>
                 @endif
+                <x-menu-item title="Users" icon="o-user-group" link="{{ route('pages:users') }}" />
                 <x-menu-item title="Tenants" icon="o-circle-stack" link="{{ route('pages:tenants')}}" />
                 <x-menu-item title="Applications" icon="o-cube" link="{{ route('pages:apps') }}" />
-                <x-menu-item title="Customers" icon="o-users" link="####" />
                 <x-menu-item title="Abonnements" icon="o-currency-euro" link="{{ route('pages:abonnements') }}" />
-                {{-- <x-menu-sub title="Applications" icon="o-cpu-chip">
-                    <x-menu-item title="Applications" icon="o-cube" link="{{ route('pages:apps') }}" />
-                    <x-menu-item title="Modules application" icon="o-archive-box" link="{{ route('pages:modules') }}" />
-                    <x-menu-item title="Packs application" icon="o-archive-box" link="####" />
-                </x-menu-sub> --}}
             </x-menu>
         </x-slot:sidebar>
 

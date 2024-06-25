@@ -6,6 +6,7 @@ use App\Models\Subscribe;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class AbonnementList extends Component
 {
@@ -18,7 +19,21 @@ class AbonnementList extends Component
 
     public function mount()
     {
+        //$this->checkPermissions('role-list|role-create|role-edit|role-delete');
         $this->testConnection();
+    }
+
+    protected function checkPermissions($permissions)
+    {
+        $permissions = is_array($permissions) ? $permissions : explode('|', $permissions);
+
+        foreach ($permissions as $permission) {
+            if (Auth::user()->can($permission)) {
+                return;
+            }
+        }
+
+        throw new AuthorizationException("Cette action n'est pas autorisée, car vous n'êtes pas abonné à ce module.");
     }
 
     public function testConnection()
@@ -27,7 +42,7 @@ class AbonnementList extends Component
 
         if ($user && $user->tenant) {
             $tenant = $user->tenant;
-            $db = 'tenant_'.$tenant->id;//$tenant->id;
+            $db = 'tenant_' . $tenant->id; //$tenant->id;
 
             if ($db) {
                 try {
@@ -64,11 +79,11 @@ class AbonnementList extends Component
     public function render()
     {
         $abonnements = DB::table('subscribes')
-                        ->join('users', 'users.id', 'subscribes.user_id')
-                        ->join('apps', 'apps.id', 'subscribes.apps_id')
-                        ->join('packs', 'packs.id','subscribes.pack_id')
-                        ->select('subscribes.*', 'users.name as user_name', 'apps.name as app_name', 'packs.pack_name', 'packs.price_pack')
-                        ->paginate(20);
+            ->join('users', 'users.id', 'subscribes.user_id')
+            ->join('apps', 'apps.id', 'subscribes.apps_id')
+            ->join('packs', 'packs.id', 'subscribes.pack_id')
+            ->select('subscribes.*', 'users.name as user_name', 'apps.name as app_name', 'packs.pack_name', 'packs.price_pack')
+            ->paginate(20);
 
         $headers = [
             ['key' => 'id', 'label' => '#'],
@@ -89,5 +104,4 @@ class AbonnementList extends Component
             'tables' => $this->tables,
         ]);
     }
-
 }

@@ -10,7 +10,7 @@
             <x-button icon="o-currency-euro" class="btn-primary" label="Souscrire" wire:click="$toggle('showDrawer2')" />
         </x-slot:actions>
     </x-header>
-    <x-mary-button label="Authorize" wire:click="isAuthorize()" class="btn-primary"/>
+
 <div class="p-5 rounded-lg shadow-sm card bg-base-100" wire:key="maryfe2c4520cee98a7fa7867a379ba3b286">
         <div class="pb-5">
             <div class="flex items-center justify-between">
@@ -58,13 +58,13 @@
 
     {{-- Packs disponible --}}
     <x-card class="mt-4" title="App Packs" subtitle="Toutes les pack disponible" separator progress-indicator="save2">
-        <x-table :headers="$headers_pack" :rows="$packs" striped @row-click="alert($event.detail.pack_name)" />
+        <x-table :headers="$headers_pack" :rows="$packs" @row-click="alert($event.detail.name)" />
     </x-card>
 
     {{-- Modules disponible --}}
-    <x-card class="mt-4" title="App Modules" subtitle="Module concernant l'aplication" separator progress-indicator="save2">
-        <x-table :headers="$headers_module" :rows="$modules" striped @row-click="alert($event.detail.module_name)" />
-    </x-card>
+    {{-- <x-card class="mt-4" title="App Modules" subtitle="Module concernant l'aplication" separator progress-indicator="save2">
+        <x-table :headers="$headers_module" :rows="$modules" @row-click="alert($event.detail.module_name)" />
+    </x-card> --}}
 
     <x-drawer  title="Souscription à {{ $app->name }}" separator wire:model="showDrawer2" class="w-11/12 lg:w-1/3" right>
         <div>
@@ -91,7 +91,7 @@
                         <select class="w-full select select-primary" wire:model.live='pack_id'>
                             <option value="">Quelle pack vous souhetez souscrire?</option>
                             @foreach ($packs as $pack )
-                                <option value="{{ $pack->id }}">{{ $pack->pack_name }}</option>
+                                <option value="{{ $pack->id }}">{{ $pack->name }}</option>
                             @endforeach
                           </select>
 

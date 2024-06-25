@@ -11,10 +11,12 @@ use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Mary\Traits\Toast;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithPagination;
 
 class AppDetails extends Component
 {
     use Toast;
+    use WithPagination;
 
     public Apps $app;
     public bool $showDrawer2 = false;
@@ -48,10 +50,10 @@ class AppDetails extends Component
         //pack de l'application
         $headers_pack = [
             ['key' => 'id', 'label' => '#'],
-            ['key' => 'pack_name', 'label' => 'Pack'],
-            ['key' => 'price_pack', 'label' => 'Price']
+            ['key' => 'name', 'label' => 'Pack'],
+            ['key' => 'amount', 'label' => 'Price / Mois']
         ];
-        $packs = Pack::where('apps_id', $app->id)->paginate(10);
+        $packs = Pack::where('app_id', $app->id)->get();
 
         // get modules apps
         $headers_module = [
@@ -80,7 +82,7 @@ class AppDetails extends Component
         if($property)
         {
             $selectedPack = Pack::find($property);
-            $this->price = $selectedPack->price_pack;
+            $this->price = $selectedPack->amount;
         }
     }
 
