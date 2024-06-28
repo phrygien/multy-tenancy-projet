@@ -16,6 +16,7 @@ class AbonnementList extends Component
     public $message;
     public $tables;
     public $tenantDbName;
+    public bool $showDrawer2 = false;
 
     public function mount()
     {
@@ -78,22 +79,22 @@ class AbonnementList extends Component
 
     public function render()
     {
-        $abonnements = DB::table('subscribes')
-            ->join('users', 'users.id', 'subscribes.user_id')
-            ->join('apps', 'apps.id', 'subscribes.apps_id')
-            ->join('packs', 'packs.id', 'subscribes.pack_id')
-            ->select('subscribes.*', 'users.name as user_name', 'apps.name as app_name', 'packs.pack_name', 'packs.price_pack')
+        $abonnements = DB::table('abonnements')
+            ->join('users', 'users.id', 'abonnements.user_id')
+            ->join('pricings', 'pricings.id', 'abonnements.pricing_id')
+            //->join('packs', 'packs.id', 'subscribes.pack_id')
+            ->select('abonnements.*', 'users.name as user_name', 'pricings.name as price_name', 'pricings.price')
+            ->where('abonnements.user_id', Auth::user()->id)
             ->paginate(20);
 
         $headers = [
             ['key' => 'id', 'label' => '#'],
-            ['key' => 'app_name', 'label' => 'Application'],
-            ['key' => 'pack_name', 'label' => 'Pack'],
-            ['key' => 'user_name', 'label' => 'Customer'],
-            ['key' => 'subscribe_start', 'label' => 'Debut abonnement'],
-            ['key' => 'subscribe_end', 'label' => 'Fin abonnement'],
-            ['key' => 'price_pack', 'label' => 'Montant'],
-            ['key' => 'state', 'label' => 'Statut']
+            ['key' => 'debut', 'label' => 'Debut'],
+            ['key' => 'fin', 'label' => 'Fin'],
+            ['key' => 'user_name', 'label' => 'Responsable'],
+            ['key' => 'price_name', 'label' => 'Pack Abonnement'],
+            ['key' => 'price', 'label' => 'Montant / Mois'],
+            ['key' => 'statut', 'label' => 'Statut']
         ];
 
         return view('livewire.admin.abonnements.abonnement-list', [

@@ -53,6 +53,7 @@ class UserList extends Component
         ];
 
         $tenant_users = $this->getUserTenant();
+
         //dd($tenant_users);
         return view('livewire.admin.users.user-list', [
             'headers' => $headers,
@@ -69,6 +70,8 @@ class UserList extends Component
 
         if ($connected_user && $connected_user->tenant) {
             $tenant = $connected_user->tenant;
+
+            //dd($tenant);
             $db = 'tenant_'.$tenant->id;
 
             if($db){

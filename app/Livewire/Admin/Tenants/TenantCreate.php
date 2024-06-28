@@ -54,9 +54,9 @@ class TenantCreate extends Component
         // $createdTenant->user_id = Auth::user()->id;
         // $createdTenant->save();
 
-        $tenant->domains()->create([
-            'domain' => $this->domain_name.'.'.config('app.domain'),
-        ]);
+        // $tenant->domains()->create([
+        //     'domain' => $this->domain_name.'.'.config('app.domain'),
+        // ]);
 
         $this->reset();
 

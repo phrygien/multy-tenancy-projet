@@ -16,5 +16,4 @@
             {{-- <livewire:tenants.stats />
             <livewire:tenants.department-list /> --}}
         </div>
-
 </x-layouts.admin>

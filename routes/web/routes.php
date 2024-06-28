@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Models\Apps;
 use App\Models\Pack;
+use App\Models\Tenant;
 use Illuminate\Support\Facades\Route;
 
 foreach (config('tenancy.central_domains') as $domain) {
@@ -40,6 +41,12 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::middleware(['auth'])->group(static function (): void {
             Route::view('tenants/create', 'pages.admin.tenants.create')->name('tenants.create');
         });
+
+        Route::get('tenants/{id}/details', function (Tenant $t, $id) {
+
+            $t = Tenant::find($id);
+            return view('pages.admin.tenants.details', compact('t'));
+        })->name('tenants.details');
 
         /** pour gerer les application */
         Route::middleware(['auth'])->group(static function (): void {

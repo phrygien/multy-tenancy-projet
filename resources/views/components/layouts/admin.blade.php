@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" >
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
@@ -24,7 +24,7 @@
     {{-- MAIN --}}
     <x-main full-width>
         {{-- SIDEBAR --}}
-        <x-slot:sidebar drawer="main-drawer" collapsible class="bg-base-100 lg:bg-inherit">
+        <x-slot:sidebar drawer="main-drawer" collapsible class="bg-base-100 lg:bg-inherit" full-width>
 
             {{-- BRAND --}}
             <div class="pt-5 ml-5">Tenancy Admin</div>
@@ -43,15 +43,15 @@
 
                 <x-menu-item title="Dashboard" icon="o-sparkles" link="/" />
                 @if(Auth::user()->is_admin == 1)
-                <x-menu-item title="Users" icon="o-user-group" link="{{ route('pages:users') }}" />
-                <x-menu-sub title="Packs & Modules" icon="o-cpu-chip">
+                {{-- <x-menu-item title="Users" icon="o-user-group" link="{{ route('pages:users') }}" /> --}}
+                {{-- <x-menu-sub title="Packs & Modules" icon="o-cpu-chip">
                     <x-menu-item title="Packs application" icon="o-archive-box" link="{{ route('pages:packs')}}" />
                     <x-menu-item title="Modules application" icon="o-archive-box" link="{{ route('pages:modules') }}" />
-                </x-menu-sub>
+                </x-menu-sub> --}}
                 @endif
                 <x-menu-item title="Users" icon="o-user-group" link="{{ route('pages:users') }}" />
-                <x-menu-item title="Tenants" icon="o-circle-stack" link="{{ route('pages:tenants')}}" />
-                <x-menu-item title="Applications" icon="o-cube" link="{{ route('pages:apps') }}" />
+                <x-menu-item title="Tenant et Domain" icon="o-circle-stack" link="{{ route('pages:tenants')}}" />
+                {{-- <x-menu-item title="Applications" icon="o-cube" link="{{ route('pages:apps') }}" /> --}}
                 <x-menu-item title="Abonnements" icon="o-currency-euro" link="{{ route('pages:abonnements') }}" />
             </x-menu>
         </x-slot:sidebar>
@@ -63,6 +63,6 @@
     </x-main>
 
     {{--  TOAST area --}}
-    <x-toast position="toast-top toast-center" />
+    <x-toast position="toast-top toast-right" />
 </body>
 </html>

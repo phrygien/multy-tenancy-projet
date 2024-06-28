@@ -45,7 +45,11 @@
                     <x-menu-item title="Profile" icon="o-wifi" link="{{ route('pages:tenants:settings:profile') }}" />
                     <x-menu-item title="Tenant" icon="o-archive-box" link="####" />
                 </x-menu-sub>
-                <x-menu-separator />
+                <x-menu-item title="Store" icon="o-building-storefront" link="{{ route('pages:tenants:schools:school') }}" />
+                <x-menu-item title="Catologes" icon="o-rectangle-stack" link="{{ route('pages:tenants:schools:school') }}" />
+                <x-menu-item title="Products" icon="o-shopping-bag" link="{{ route('pages:tenants:schools:school') }}" />
+                <x-menu-item title="Customers" icon="o-users" link="{{ route('pages:tenants:schools:school') }}" />
+                {{-- <x-menu-separator />
                 <x-menu-sub title="Plateforme school" icon="o-academic-cap">
                     <x-menu-item title="Plateforme school" icon="o-home" link="{{ route('pages:tenants:schools:school') }}" />
                 </x-menu-sub>
@@ -59,7 +63,7 @@
                     <x-menu-item title="Catologes" icon="o-rectangle-stack" link="{{ route('pages:tenants:schools:school') }}" />
                     <x-menu-item title="Products" icon="o-shopping-bag" link="{{ route('pages:tenants:schools:school') }}" />
                     <x-menu-item title="Customers" icon="o-users" link="{{ route('pages:tenants:schools:school') }}" />
-                </x-menu-sub>
+                </x-menu-sub> --}}
             </x-menu>
         </x-slot:sidebar>
 

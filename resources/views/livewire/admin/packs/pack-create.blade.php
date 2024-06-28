@@ -38,5 +38,6 @@
                 <x-button label="Enregistrer" class="btn-primary" type="submit" spinner="save" />
             </x-slot:actions>
         </x-form>
+
     </div>
 </div>

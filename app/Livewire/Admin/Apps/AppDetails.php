@@ -72,6 +72,11 @@ class AppDetails extends Component
         ]);
     }
 
+    /**
+     * A description of the entire PHP function.
+     *
+     * @param Apps $app description
+     */
     public function souscrire(Apps $app): void
     {
         $this->success('Souscription avec succèes ! ');
