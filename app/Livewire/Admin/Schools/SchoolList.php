@@ -24,6 +24,7 @@ class SchoolList extends Component
             ['key' => 'school_name', 'label' => 'Nom etablisement'],
             ['key' => 'abreviation', 'label' => 'Abreviation'],
             ['key' => 'identity', 'label' => 'Identité Code'],
+            ['key' => 'url', 'label' => 'Site web'],
             ['key' => 'telephone_phixe', 'label' => 'Numéro fixe'],
             ['key' => 'telephone_mobile', 'label' => 'Numéro mobile'],
             ['key' => 'province_name', 'label' => 'Province'],

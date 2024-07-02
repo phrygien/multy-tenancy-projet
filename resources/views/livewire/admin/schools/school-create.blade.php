@@ -5,7 +5,7 @@
     <div class="grid gap-5 lg:grid-cols-2">
         <div>
             <x-form wire:submit="save">
-                <div class="lg:grid grid-cols-5">
+                {{-- <div class="lg:grid grid-cols-5">
                     <div class="col-span-2">
                         <x-header title="Logo" subtitle="Logo de l'école" size="text-2xl" />
                     </div>
@@ -16,7 +16,7 @@
                     </div>
                 </div>
 
-                <hr class="my-5" />
+                <hr class="my-5" /> --}}
 
                 <div class="lg:grid grid-cols-5">
                     <div class="col-span-2">

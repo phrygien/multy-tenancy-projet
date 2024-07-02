@@ -82,10 +82,12 @@ class SchoolCreate extends Component
         $this->provinces = Province::all();
 
         $tenant = Auth::user()->tenant;
-        $domain = Domain::where('tenant_id', $tenant->id)->first();
-        $this->url = 'https://'.$domain->domain;
-        $this->tenant_id = $tenant->id;
-        $this->identity = strtoupper($this->generateUniqueId().'-'.$tenant->id);
+        if($tenant != null ){
+            $domain = Domain::where('tenant_id', $tenant->id)->first();
+            $this->url = 'https://'.$domain->domain;
+            $this->tenant_id = $tenant->id;
+            $this->identity = strtoupper($this->generateUniqueId().'-'.$tenant->id);
+        }
     }
 
     /**
@@ -284,6 +286,7 @@ class SchoolCreate extends Component
 
         } catch (\Exception $e) {
             DB::rollBack();
+            //dd($e->getMessage());
             $this->error('Data not saved !');
         }
     }
