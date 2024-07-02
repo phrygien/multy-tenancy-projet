@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Models\Abonnement;
 use App\Models\Apps;
 use App\Models\Pack;
+use App\Models\School;
 use App\Models\Tenant;
 use Illuminate\Support\Facades\Route;
 
@@ -97,6 +98,12 @@ foreach (config('tenancy.central_domains') as $domain) {
         Route::middleware(['auth'])->group(static function (): void {
             Route::view('schools/create', 'pages.admin.schools.create')->name('schools.create');
         });
+
+        Route::get('schools/{id}/edit', function (School $school, $id) {
+
+            $school = School::find($id);
+            return view('pages.admin.schools.edit', compact('school'));
+        })->name('schools.edit');
 
     });
 }

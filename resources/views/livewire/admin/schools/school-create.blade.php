@@ -1,5 +1,5 @@
 <div>
-    <x-header title="Ajouter école" separator />
+    <x-header title="Ajouter école" separator progress-indicator />
 
     <!-- Grid stuff from Tailwind -->
     <div class="grid gap-5 lg:grid-cols-2">
@@ -96,7 +96,7 @@
                 </div>
 
                 <x-slot:actions>
-                    <x-button label="Annuler" />
+                    <x-button label="Annuler" link="/schools" />
                     <x-button label="Valider" class="btn-primary" type="submit" spinner="save" />
                 </x-slot:actions>
             </x-form>

@@ -1,10 +1,7 @@
-<x-layouts.admin title="School">
-    <x-header title="Etablissements" subtitle="Gerer votre établissement">
-        <x-slot:middle class="!justify-end">
-            <x-input icon="o-bolt" placeholder="Search..." />
-        </x-slot:middle>
+<x-layouts.admin title="Ecoles">
+    <x-header title="Ecoles" subtitle="Gerer votre école">
         <x-slot:actions>
-            <x-button icon="o-plus" class="btn-primary" link="{{ route('pages:schools.create') }}"/>
+            <x-button icon="o-plus" class="btn-primary" link="{{ route('pages:schools.create') }}" label="Ajouter école"/>
         </x-slot:actions>
     </x-header>
 
