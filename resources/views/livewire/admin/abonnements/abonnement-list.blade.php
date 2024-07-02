@@ -5,23 +5,29 @@
         </x-slot:middle>
         <x-slot:actions>
             <x-button icon="o-funnel" wire:click="$toggle('showDrawer2')" />
-            <x-button icon="o-plus" class="btn-primary" />
         </x-slot:actions>
     </x-header>
 
     <x-card separator progress-indicator>
-        <x-table :headers="$headers" :rows="$abonnements" link="/docs/installation/?from={username}" >
-            @scope('cell_state', $abonnement)
-            @if($abonnement->state ==0 )
-                <div class="badge badge-primary">Impayé</div>
+        <x-table :headers="$headers" :rows="$abonnements" link="/abonnements/{id}/details" with-pagination >
+            @scope('cell_is_active', $abonnement)
+            @if($abonnement->is_active ==0 )
+                <div class="badge badge-secondary">Expieré</div>
             @endif
-            @if($abonnement->state ==1 )
-                <div class="badge badge-accent">Payé</div>
-            @endif
-            @if($abonnement->state ==2 )
-                <div class="badge badge-secondary">Expiré</div>
+            @if($abonnement->is_active ==1 )
+                <div class="badge badge-success">En cours</div>
             @endif
             @endscope
+
+            @scope('cell_statut', $abonnement)
+            @if($abonnement->statut ==0 )
+                <div class="badge badge-secondary">Non payer</div>
+            @endif
+            @if($abonnement->statut ==1 )
+                <div class="badge badge-success">Paiment Ok</div>
+            @endif
+            @endscope
+
         </x-table>
     </x-card>
 

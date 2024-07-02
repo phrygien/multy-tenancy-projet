@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Abonnement;
 use App\Models\Apps;
 use App\Models\Pack;
 use App\Models\Tenant;
@@ -67,6 +68,13 @@ foreach (config('tenancy.central_domains') as $domain) {
             Route::view('abonnements', 'pages.admin.abonnements.index')->name('abonnements');
         });
 
+        Route::get('abonnements/{id}/details', function (Abonnement $abonnement, $id) {
+
+            $abonnement = Abonnement::find($id);
+            return view('pages.admin.abonnements.details', compact('abonnement'));
+        })->name('abonnements.details');
+
+
         Route::middleware(['auth'])->group(static function (): void {
             Route::view('packs', 'pages.admin.packs.index')->name('packs');
         });
@@ -80,6 +88,15 @@ foreach (config('tenancy.central_domains') as $domain) {
             $pack = Pack::find($id);
             return view('pages.admin.packs.edit', compact('pack'));
         })->name('packs.edit');
+
+
+        Route::middleware(['auth'])->group(static function (): void {
+            Route::view('schools', 'pages.admin.schools.index')->name('schools');
+        });
+
+        Route::middleware(['auth'])->group(static function (): void {
+            Route::view('schools/create', 'pages.admin.schools.create')->name('schools.create');
+        });
 
     });
 }

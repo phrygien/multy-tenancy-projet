@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Auth\Access\AuthorizationException;
+use Livewire\WithPagination;
 
 class AbonnementList extends Component
 {
+    USE WithPagination;
     public $tenantDatabaseName;
 
     public $status;
@@ -17,6 +19,7 @@ class AbonnementList extends Component
     public $tables;
     public $tenantDbName;
     public bool $showDrawer2 = false;
+
 
     public function mount()
     {
@@ -83,18 +86,23 @@ class AbonnementList extends Component
             ->join('users', 'users.id', 'abonnements.user_id')
             ->join('pricings', 'pricings.id', 'abonnements.pricing_id')
             //->join('packs', 'packs.id', 'subscribes.pack_id')
-            ->select('abonnements.*', 'users.name as user_name', 'pricings.name as price_name', 'pricings.price')
-            ->where('abonnements.user_id', Auth::user()->id)
-            ->paginate(20);
+            ->select('abonnements.*', 'users.name as user_name', 'pricings.name as price_name', 'pricings.price');
+            if (1 !== Auth::user()->is_admin) {
+                $abonnements->where('users.id', Auth::user()->id);
+            }
+            $abonnements = $abonnements->paginate(10);
 
         $headers = [
             ['key' => 'id', 'label' => '#'],
+            ['key' => 'tenant_id', 'label' => 'ID PLATEFORME'],
             ['key' => 'debut', 'label' => 'Debut'],
             ['key' => 'fin', 'label' => 'Fin'],
             ['key' => 'user_name', 'label' => 'Responsable'],
             ['key' => 'price_name', 'label' => 'Pack Abonnement'],
             ['key' => 'price', 'label' => 'Montant / Mois'],
-            ['key' => 'statut', 'label' => 'Statut']
+            ['key' => 'statut', 'label' => 'Statut Paiement'],
+            ['key' => 'is_active', 'label' => 'Etat'],
+            ['key' => 'created_at', 'label' => 'Date Creation'],
         ];
 
         return view('livewire.admin.abonnements.abonnement-list', [
@@ -105,4 +113,5 @@ class AbonnementList extends Component
             'tables' => $this->tables,
         ]);
     }
+
 }
