@@ -1,11 +1,22 @@
 <div>
-    <x-header title="Ajouter votre école" separator />
+    <x-header title="Ajouter école" separator />
 
     <!-- Grid stuff from Tailwind -->
     <div class="grid gap-5 lg:grid-cols-2">
         <div>
             <x-form wire:submit="save">
+                <div class="lg:grid grid-cols-5">
+                    <div class="col-span-2">
+                        <x-header title="Logo" subtitle="Logo de l'école" size="text-2xl" />
+                    </div>
+                    <div class="col-span-3 grid gap-3">
+                        <x-file wire:model="photo" accept="image/png, image/jpeg">
+                            <img src="{{ $user->avatar ?? 'https://flow.mary-ui.com/images/empty-user.jpg' }}" class="h-40 rounded-lg" />
+                        </x-file>
+                    </div>
+                </div>
 
+                <hr class="my-5" />
 
                 <div class="lg:grid grid-cols-5">
                     <div class="col-span-2">
@@ -68,6 +79,18 @@
                         placeholder-value="0"
                         hint=""
                         wire:model.live="district_id" />
+
+                        <x-select
+                        label="Commune"
+                        :options="$communes"
+                        option-value="id"
+                        option-label="nom"
+                        placeholder="Commune ?"
+                        placeholder-value="0"
+                        hint=""
+                        wire:model="commune_id" />
+
+                        <x-input label="Adresse exacte" icon-right="o-map-pin" placeholder="" wire:model='adresse' hint="" />
 
                     </div>
                 </div>

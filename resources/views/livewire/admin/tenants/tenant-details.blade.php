@@ -1,6 +1,6 @@
+<div class="grid gap-5 lg:grid-cols-2">
+
 <div>
-
-
     <x-form wire:submit="save">
         {{--  Basic section  --}}
         <div class="grid-cols-5 lg:grid">
@@ -48,4 +48,8 @@
             <x-button label="Valider" class="btn-primary" type="submit" spinner="save" />
         </x-slot:actions>
     </x-form>
+</div>
+<div>
+    <img src="https://orange.mary-ui.com/images/checkout.png" width="300" class="mx-auto" />
+</div>
 </div>

@@ -1,5 +1,5 @@
 <x-layouts.admin title="Details Tenant">
-    <x-header title="Details tenant" subtitle="Configurer l'accee et vos abonement">
+    <x-header title="Details tenant" subtitle="Acheter votre domain maintenant" separator>
 
     </x-header>
 

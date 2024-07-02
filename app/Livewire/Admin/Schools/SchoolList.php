@@ -18,13 +18,13 @@ class SchoolList extends Component
      */
     public function render()
     {
-        $schools = DB::table('schools')->join('province', 'province.id', '=', 'schools.province_id')->select('schools.*', 'provinces.name as province_name')->paginate(10);
+        $schools = DB::table('schools')->join('province', 'province.id', '=', 'schools.province_id')->select('schools.*', 'province.nom as province_name')->paginate(10);
         $headers = [
             ['key' => 'id', 'label' => '#'],
             ['key' => 'school_name', 'label' => 'Nom etablisement'],
             ['key' => 'abreviation', 'label' => 'Abreviation'],
             ['key' => 'identity', 'label' => 'Identité Code'],
-            ['key' => 'telephone_fixe', 'label' => 'Numéro fixe'],
+            ['key' => 'telephone_phixe', 'label' => 'Numéro fixe'],
             ['key' => 'telephone_mobile', 'label' => 'Numéro mobile'],
             ['key' => 'province_name', 'label' => 'Province'],
         ];
