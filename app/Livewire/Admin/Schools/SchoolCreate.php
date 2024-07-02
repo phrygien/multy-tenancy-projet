@@ -2,9 +2,12 @@
 
 namespace App\Livewire\Admin\Schools;
 
+use App\Helpers\Mecene;
+use App\Models\Abonnement;
 use App\Models\Commune;
 use App\Models\District;
 use App\Models\Domain;
+use App\Models\Pricing;
 use App\Models\Province;
 use App\Models\Region;
 use App\Models\School;
@@ -122,10 +125,108 @@ class SchoolCreate extends Component
         return view('livewire.admin.schools.school-create');
     }
 
-    public function save(){
+    // public function save(){
+    //     $this->validate();
+    //     try {
+    //         //verification limite nb etablissement selon pricing abonement
+    //         $abonnement = Abonnement::where('user_id', Auth::user()->id)
+    //                     ->where('tenant_id', Auth::user()->tenant->id)
+    //                     ->where('is_active', 1)
+    //                     ->first();
+
+    //         if($abonnement){
+    //             // get pack abonnement
+    //             $pricing = Pricing::where('id', $abonnement->pricing_id)->first();
+    //             //dd(count(School::where('user_id', Auth::user()->id)->get()));
+    //             //verification nb max etablissement
+    //             if(count(School::where('user_id', Auth::user()->id)->get()) >= $pricing->max_school){
+    //                 $this->warning('Vous avez atteint le nombre maximum d\'etablissements autorisés');
+    //             }else{
+    //                 DB::beginTransaction();
+    //                 School::create([
+    //                     'school_name' => $this->school_name,
+    //                     'abreviation' => $this->abreviation,
+    //                     'identity' => $this->identity,
+    //                     'tenant_id' => $this->tenant_id,
+    //                     'url' => $this->url,
+    //                     'telephone_phixe' => $this->telephone_fixe,
+    //                     'telephone_mobile' => $this->telephone_mobile,
+    //                     'email' => $this->email,
+    //                     'province_id' => $this->province_id,
+    //                     'region_id' => $this->region_id,
+    //                     'district_id' => $this->district_id,
+    //                     'commune_id' => $this->commune_id,
+    //                     'adresse' => $this->adresse,
+    //                     'is_published' => true,
+    //                     'user_id' => Auth::user()->id,
+    //                 ]);
+
+    //                 // save school to tenant DB
+    //                 $connected_user = Auth::user();
+    //                 if ($connected_user && $connected_user->tenant) {
+    //                     $tenant = $connected_user->tenant;
+    //                         $db = 'tenant_'.$tenant->id;
+
+    //                         if($db){
+    //                             config(['database.connections.tenant.database' => $db]);
+    //                                 DB::purge('tenant');
+    //                                 DB::reconnect('tenant');
+
+    //                                 DB::connection('tenant')->getPdo();
+
+    //                                 // Insérer l'abonnement dans la base de données du tenant
+    //                                 DB::connection('tenant')->table('schools')->insert([
+    //                                     'school_name' => $this->school_name,
+    //                                     'abreviation' => $this->abreviation,
+    //                                     'identity' => $this->identity,
+    //                                     'tenant_id' => $this->tenant_id,
+    //                                     'url' => $this->url,
+    //                                     'telephone_phixe' => $this->telephone_fixe,
+    //                                     'telephone_mobile' => $this->telephone_mobile,
+    //                                     'email' => $this->email,
+    //                                     'province_id' => $this->province_id,
+    //                                     'region_id' => $this->region_id,
+    //                                     'district_id' => $this->district_id,
+    //                                     'commune_id' => $this->commune_id,
+    //                                     'adresse' => $this->adresse,
+    //                                     'is_published' => true,
+    //                                     'user_id' => Auth::user()->id,
+    //                                 ]);
+
+    //                             DB::commit();
+    //                         }
+    //                     }
+
+    //                     $this->success('L\'école a été créée !');
+    //             }
+    //         }else{
+    //             $this->warning('Pas d\'abonnement actif pour le moment !');
+    //         }
+
+
+    //     } catch (\Exception $e) {
+    //         dd($e->getMessage());
+    //         $this->error('Data not saved !');
+    //     }
+
+    // }
+    public function save()
+    {
         $this->validate();
+
         try {
+            $limitCheck = Mecene::hasReachedSchoolLimit();
+
+            if ($limitCheck['status']) {
+                $this->warning($limitCheck['message']);
+                return;
+            }
+
             DB::beginTransaction();
+
+            // Generate unique ID
+            $this->identity = Mecene::generateUniqueId();
+
             School::create([
                 'school_name' => $this->school_name,
                 'abreviation' => $this->abreviation,
@@ -144,48 +245,46 @@ class SchoolCreate extends Component
                 'user_id' => Auth::user()->id,
             ]);
 
-             // save school to tenant DB
-             $connected_user = Auth::user();
-             if ($connected_user && $connected_user->tenant) {
+            // Save school to tenant DB
+            $connected_user = Auth::user();
+            if ($connected_user && $connected_user->tenant) {
                 $tenant = $connected_user->tenant;
-                    $db = 'tenant_'.$tenant->id;
+                $db = 'tenant_' . $tenant->id;
 
-                    if($db){
-                        config(['database.connections.tenant.database' => $db]);
-                            DB::purge('tenant');
-                            DB::reconnect('tenant');
+                if ($db) {
+                    config(['database.connections.tenant.database' => $db]);
+                    DB::purge('tenant');
+                    DB::reconnect('tenant');
+                    DB::connection('tenant')->getPdo();
 
-                            DB::connection('tenant')->getPdo();
+                    // Insert school in tenant's DB
+                    DB::connection('tenant')->table('schools')->insert([
+                        'school_name' => $this->school_name,
+                        'abreviation' => $this->abreviation,
+                        'identity' => $this->identity,
+                        'tenant_id' => $this->tenant_id,
+                        'url' => $this->url,
+                        'telephone_phixe' => $this->telephone_fixe,
+                        'telephone_mobile' => $this->telephone_mobile,
+                        'email' => $this->email,
+                        'province_id' => $this->province_id,
+                        'region_id' => $this->region_id,
+                        'district_id' => $this->district_id,
+                        'commune_id' => $this->commune_id,
+                        'adresse' => $this->adresse,
+                        'is_published' => true,
+                        'user_id' => Auth::user()->id,
+                    ]);
 
-                            // Insérer l'abonnement dans la base de données du tenant
-                            DB::connection('tenant')->table('schools')->insert([
-                                'school_name' => $this->school_name,
-                                'abreviation' => $this->abreviation,
-                                'identity' => $this->identity,
-                                'tenant_id' => $this->tenant_id,
-                                'url' => $this->url,
-                                'telephone_phixe' => $this->telephone_fixe,
-                                'telephone_mobile' => $this->telephone_mobile,
-                                'email' => $this->email,
-                                'province_id' => $this->province_id,
-                                'region_id' => $this->region_id,
-                                'district_id' => $this->district_id,
-                                'commune_id' => $this->commune_id,
-                                'adresse' => $this->adresse,
-                                'is_published' => true,
-                                'user_id' => Auth::user()->id,
-                            ]);
-
-                        DB::commit();
-                    }
+                    DB::commit();
                 }
+            }
+
             $this->success('L\'école a été créée !');
 
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            DB::rollBack();
             $this->error('Data not saved !');
         }
-
     }
-
 }
