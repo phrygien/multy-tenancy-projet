@@ -1,8 +1,5 @@
 <x-layouts.app title="Année scolaire">
-    <x-header title="Année scolaire" subtitle="Gerer l'année scolaire de l'école">
-        <x-slot:actions>
-            <x-button icon="o-funnel" />
-            <x-button icon="o-plus" class="btn-primary" label="Ajouter année scolaire" />
-        </x-slot:actions>
-    </x-header>
+    <div class="sm:px-6 lg:col-span-11 lg:px-0">
+        <livewire:tenant.anneescolaire.annee-list />
+    </div>
 </x-layouts.app>

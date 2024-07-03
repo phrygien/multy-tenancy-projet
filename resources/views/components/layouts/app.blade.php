@@ -50,23 +50,24 @@
                     <x-menu-item title="Profile" icon="o-wifi" link="{{ route('pages:tenants:settings:profile') }}" />
                     <x-menu-item title="Tenant" icon="o-archive-box" link="####" />
                 </x-menu-sub>
-                {{-- <x-menu-item title="Store" icon="o-building-storefront" link="{{ route('pages:tenants:schools:school') }}" />
-                <x-menu-item title="Catologes" icon="o-rectangle-stack" link="{{ route('pages:tenants:schools:school') }}" />
-                <x-menu-item title="Products" icon="o-shopping-bag" link="{{ route('pages:tenants:schools:school') }}" />
-                <x-menu-item title="Customers" icon="o-users" link="{{ route('pages:tenants:schools:school') }}" /> --}}
-                <x-menu-separator title="Parametres"/>
-                <x-menu-item title="Annee scolaire" icon="o-calendar" link="{{ route('pages:tenants:schools:anneescolaires') }}" />
-                <x-menu-item title="Cycles" icon="o-presentation-chart-line" link="{{ route('pages:tenants:schools:school') }}" />
-                <x-menu-item title="Niveau" icon="o-presentation-chart-bar" link="{{ route('pages:tenants:schools:school') }}" />
 
-                <x-menu-separator title="Gestion éleves"/>
-                <x-menu-item title="Parent d'éleves" icon="o-user" link="####" />
-                <x-menu-item title="Admissions" icon="o-magnifying-glass-circle" link="####" />
-                <x-menu-item title="Eleves" icon="o-user-group" link="####" />
+                <x-menu-sub title="Parametrage academique" icon="o-computer-desktop">
+                    <x-menu-item title="Promotions" icon="o-calendar" link="{{ route('pages:tenants:schools:anneescolaires') }}" />
+                    <x-menu-item title="Cycles" icon="o-presentation-chart-line" link="{{ route('pages:tenants:schools:school') }}" />
+                    <x-menu-item title="Niveau" icon="o-presentation-chart-bar" link="{{ route('pages:tenants:schools:school') }}" />
+                </x-menu-sub>
 
-                <x-menu-separator title="Gestion inscriptions"/>
-                <x-menu-item title="Admissions" icon="o-archive-box" link="####" />
-                <x-menu-item title="Inscriptions" icon="o-academic-cap" link="####" />
+                <x-menu-sub title="Gestion des éleves" icon="o-user-group">
+                    <x-menu-item title="Parent d'éleves" icon="o-user" link="####" />
+                    <x-menu-item title="Admissions" icon="o-magnifying-glass-circle" link="####" />
+                    <x-menu-item title="Eleves" icon="o-user-group" link="####" />
+                </x-menu-sub>
+
+                <x-menu-sub title="Gestion inscriptions" icon="o-academic-cap">
+                    <x-menu-item title="Admissions" icon="o-archive-box" link="####" />
+                    <x-menu-item title="Inscriptions" icon="o-academic-cap" link="####" />
+                </x-menu-sub>
+
             </x-menu>
         </x-slot:sidebar>
 
