@@ -30,7 +30,7 @@
             {{-- <x-app-brand class="p-5 pt-3" /> --}}
             <div class="flex items-center gap-1">
                 <img class="w-30 h-15" src="{{ asset('images/login.png')}}" alt="Your Company">
-                <span class="font-bold text-3xl mr-3 bg-gradient-to-r from-amber-500 to-amber-300 bg-clip-text text-transparent ">
+                <span class="mr-3 text-3xl font-bold text-transparent bg-gradient-to-r from-amber-500 to-amber-300 bg-clip-text ">
                     {{ tenant('id') }}
                 </span>
             </div>
@@ -50,25 +50,23 @@
                     <x-menu-item title="Profile" icon="o-wifi" link="{{ route('pages:tenants:settings:profile') }}" />
                     <x-menu-item title="Tenant" icon="o-archive-box" link="####" />
                 </x-menu-sub>
-                <x-menu-item title="Store" icon="o-building-storefront" link="{{ route('pages:tenants:schools:school') }}" />
+                {{-- <x-menu-item title="Store" icon="o-building-storefront" link="{{ route('pages:tenants:schools:school') }}" />
                 <x-menu-item title="Catologes" icon="o-rectangle-stack" link="{{ route('pages:tenants:schools:school') }}" />
                 <x-menu-item title="Products" icon="o-shopping-bag" link="{{ route('pages:tenants:schools:school') }}" />
-                <x-menu-item title="Customers" icon="o-users" link="{{ route('pages:tenants:schools:school') }}" />
-                {{-- <x-menu-separator />
-                <x-menu-sub title="Plateforme school" icon="o-academic-cap">
-                    <x-menu-item title="Plateforme school" icon="o-home" link="{{ route('pages:tenants:schools:school') }}" />
-                </x-menu-sub>
-                <x-menu-separator label="Test"/>
-                <x-menu-sub title="Mircro finance" icon="o-banknotes">
-                    <x-menu-item title="Plateforme school" icon="o-home" link="{{ route('pages:tenants:schools:school') }}" />
-                </x-menu-sub>
-                <x-menu-separator />
-                <x-menu-sub title="Stock Management" icon="o-building-storefront">
-                    <x-menu-item title="Store" icon="o-building-storefront" link="{{ route('pages:tenants:schools:school') }}" />
-                    <x-menu-item title="Catologes" icon="o-rectangle-stack" link="{{ route('pages:tenants:schools:school') }}" />
-                    <x-menu-item title="Products" icon="o-shopping-bag" link="{{ route('pages:tenants:schools:school') }}" />
-                    <x-menu-item title="Customers" icon="o-users" link="{{ route('pages:tenants:schools:school') }}" />
-                </x-menu-sub> --}}
+                <x-menu-item title="Customers" icon="o-users" link="{{ route('pages:tenants:schools:school') }}" /> --}}
+                <x-menu-separator title="Parametres"/>
+                <x-menu-item title="Annee scolaire" icon="o-calendar" link="{{ route('pages:tenants:schools:anneescolaires') }}" />
+                <x-menu-item title="Cycles" icon="o-presentation-chart-line" link="{{ route('pages:tenants:schools:school') }}" />
+                <x-menu-item title="Niveau" icon="o-presentation-chart-bar" link="{{ route('pages:tenants:schools:school') }}" />
+
+                <x-menu-separator title="Gestion éleves"/>
+                <x-menu-item title="Parent d'éleves" icon="o-user" link="####" />
+                <x-menu-item title="Admissions" icon="o-magnifying-glass-circle" link="####" />
+                <x-menu-item title="Eleves" icon="o-user-group" link="####" />
+
+                <x-menu-separator title="Gestion inscriptions"/>
+                <x-menu-item title="Admissions" icon="o-archive-box" link="####" />
+                <x-menu-item title="Inscriptions" icon="o-academic-cap" link="####" />
             </x-menu>
         </x-slot:sidebar>
 
