@@ -61,6 +61,7 @@ class AnneeList extends Component
             ['key' => 'fin', 'label' => 'Date fin'],
             ['key' => 'is_open', 'label' => 'Statut'],
             ['key' => 'school_name', 'label' => 'Ecole'],
+            ['key' => '', 'label' => 'Action'],
         ];
 
         return view('livewire.tenant.anneescolaire.annee-list', [
@@ -115,12 +116,22 @@ class AnneeList extends Component
         $this->anneeModal = true;
     }
 
+    /**
+     * A function to confirm deletion.
+     *
+     * @param int $id The ID of the item to be deleted
+     */
     public function confirmerDelete($id): void
     {
         $this->deleteModal = true;
         $annee = Anneescolaire::find($id);
         $this->annee_id = $annee->id;
     }
+    /**
+     * Deletes an annee from the database and performs related actions.
+     *
+     * @return void
+     */
     public function delete(): void
     {
         Anneescolaire::find($this->annee_id)->delete();

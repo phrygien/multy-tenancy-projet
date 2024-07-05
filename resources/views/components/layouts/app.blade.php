@@ -23,6 +23,7 @@
 
     {{-- MAIN --}}
     <x-main full-width>
+
         {{-- SIDEBAR --}}
         <x-slot:sidebar drawer="main-drawer" collapsible class="bg-base-100 lg:bg-inherit">
 
@@ -53,14 +54,14 @@
 
                 <x-menu-sub title="Parametrage academique" icon="o-computer-desktop">
                     <x-menu-item title="Promotions" icon="o-calendar" link="{{ route('pages:tenants:schools:anneescolaires') }}" />
-                    <x-menu-item title="Cycles" icon="o-presentation-chart-line" link="{{ route('pages:tenants:schools:school') }}" />
+                    <x-menu-item title="Cycles" icon="o-presentation-chart-line" link="{{ route('pages:tenants:schools:cycles') }}" />
                     <x-menu-item title="Niveau" icon="o-presentation-chart-bar" link="{{ route('pages:tenants:schools:school') }}" />
                 </x-menu-sub>
 
                 <x-menu-sub title="Gestion des éleves" icon="o-user-group">
                     <x-menu-item title="Parent d'éleves" icon="o-user" link="####" />
                     <x-menu-item title="Admissions" icon="o-magnifying-glass-circle" link="####" />
-                    <x-menu-item title="Eleves" icon="o-user-group" link="####" />
+                    <x-menu-item title="Eleves" icon="o-user-group" link="{{ route('pages:tenants:schools:eleves')}}" />
                 </x-menu-sub>
 
                 <x-menu-sub title="Gestion inscriptions" icon="o-academic-cap">

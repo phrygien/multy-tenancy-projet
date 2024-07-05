@@ -50,6 +50,6 @@
     </x-form>
 </div>
 <div>
-    <img src="https://orange.mary-ui.com/images/checkout.png" width="300" class="mx-auto" />
+    <img src="{{ asset('images/achat.png')}}" width="300" class="mx-auto" />
 </div>
 </div>
