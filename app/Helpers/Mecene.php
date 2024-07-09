@@ -8,6 +8,7 @@ use App\Models\School;
 use App\Models\Pricing;
 use App\Models\Abonnement;
 use App\Models\Eleve;
+use Illuminate\Support\Facades\DB;
 
 class Mecene
 {
@@ -47,21 +48,30 @@ class Mecene
     {
         try {
             $user = Auth::user();
-            $school = School::where('user_id', $user->id)->first();
+            $school = School::where('is_published', 1)->first();
 
-            $abonnement = Abonnement::where('user_id', $user->id)
-            ->where('tenant_id', $user->tenant->id)
-            ->where('is_active', 1)
-            ->first();
+            $abonnement = Abonnement::where('is_active', 1)->where('statut', 1)->first();
+            $tenantId = $abonnement->tenant_id;
+            // $abonnement = Abonnement::where('user_id', $user->id)
+            // ->where('tenant_id', $user->tenant->id)
+            // ->where('is_active', 1)
+            // ->first();
 
-             if(!$school) {
-                return ['status' => false, 'message' => 'Vous n\'etes pas encore affectez a un ecole !'];
+             if(!$abonnement) {
+                return ['status' => false, 'message' => 'Abonnement introuvable !'];
              }
 
-             $pricing = Pricing::where('id', $abonnement->pricing_id)->first();
+
             $currentStudentCount = Eleve::where('school_id', $school->id)->count();
 
-            if ($currentStudentCount >= $pricing->max_student) {
+            config(['database.connections.mysql.database' => 'eng']);
+            DB::purge('mysql');
+            DB::reconnect('mysql');
+            DB::connection('mysql')->getPdo();
+
+            $pricing = DB::connection('mysql')->table('pricings')->select('name', 'max_students')->where('id', $abonnement->pricing_id)->first();
+
+            if ($currentStudentCount >= $pricing->max_students) {
                 return ['status' => true, 'message' => 'Vous avez atteint le nombre maximum d\'eleves autorisés'];
             }
 

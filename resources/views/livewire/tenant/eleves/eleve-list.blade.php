@@ -6,7 +6,7 @@
             </x-slot:middle>
             <x-slot:actions>
                 <x-button icon="o-funnel" label="Filter" />
-                <x-button icon="o-plus-circle" class="btn-primary" label="Création" />
+                <x-button icon="o-plus-circle" class="btn-primary" label="Création" link="{{ route('pages:tenants:schools:eleves.create')}}" />
             </x-slot:actions>
         </x-header>
 

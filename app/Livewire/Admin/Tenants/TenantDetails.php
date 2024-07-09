@@ -77,6 +77,7 @@ class TenantDetails extends Component
             // save abonement to tenant DB
             $connected_user = Auth::user();
 
+            // insert pricing in to tenant DB
             if ($connected_user && $connected_user->tenant) {
                 $tenant = $connected_user->tenant;
                     $db = 'tenant_'.$tenant->id;

@@ -37,4 +37,5 @@ class EleveList extends Component
             'eleves' => $eleves
         ]);
     }
+
 }

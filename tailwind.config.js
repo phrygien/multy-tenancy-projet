@@ -43,6 +43,7 @@ export default {
 		"./resources/**/*.blade.php",
 		 "./vendor/robsontenorio/mary/src/View/Components/**/*.php",
      './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+
 	],
   theme: {
     extend: {},

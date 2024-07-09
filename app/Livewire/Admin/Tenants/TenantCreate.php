@@ -66,4 +66,6 @@ class TenantCreate extends Component
             url: route('pages:tenants'),
         );
     }
+
+
 }
